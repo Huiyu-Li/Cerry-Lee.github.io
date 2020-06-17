@@ -1,0 +1,1020 @@
+<!DOCTYPE HTML>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="传统的图像分割方法, Cerry">
+    <meta name="description" content="图像分割(image segmentation)是指将图像分成若干具有相似性质的区域的过程.传统的图像分割方法主要有:
+1. 基于阈值的分割阈值法的基本思想是基于图像的灰度特征来计算一个或多个灰度阈值，并将图像中每个像素的灰度值与阈值相比较">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>传统的图像分割方法 | Cerry</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Cerry</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa fa-user-circle"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa fa-address-book"></i>
+            
+            <span>Friends</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="Search"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Cerry</div>
+        <div class="logo-desc">
+            
+            If I crossed a million oceans just to be with you, If I climbed the highest mountain just to hold you tight, Would you ever let me down?
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa fa-user-circle"></i>
+                
+                About
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa fa-address-book"></i>
+                
+                Friends
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Huiyu-Li" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Huiyu-Li" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        传统的图像分割方法
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+</style>
+<div class="row">
+    <div class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Segmentation/" target="_blank">
+                                <span class="chip bg-color">Segmentation</span>
+                            </a>
+                        
+                            <a href="/tags/Conventional-method/" target="_blank">
+                                <span class="chip bg-color">Conventional method</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Knowledge/" class="post-category" target="_blank">
+                                Knowledge
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2019-08-05
+                </div>
+
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>Read Count:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>图像分割(image segmentation)是指将图像分成若干具有相似性质的区域的过程.传统的图像分割方法主要有:</p>
+<h4 id="1-基于阈值的分割"><a href="#1-基于阈值的分割" class="headerlink" title="1. 基于阈值的分割"></a>1. 基于阈值的分割</h4><p>阈值法的基本思想是基于图像的灰度特征来计算一个或多个灰度阈值，并将图像中每个像素的灰度值与阈值相比较，最后将像素根据比较结果分到合适的类别中。因此，该类方法最为关键的一步就是按照某个准则函数来求解最佳灰度阈值。</p>
+<p>阈值法特别适用于目标和背景占据不同灰度级范围的图。</p>
+<p>图像若只有目标和背景两大类，那么只需要选取一个阈值进行分割，此方法成为单阈值分割；但是如果图像中有多个目标需要提取，单一阈值的分割就会出现作物，在这种情况下就需要选取多个阈值将每个目标分隔开，这种分割方法相应的成为多阈值分割。</p>
+<p>阀值分割方法的优缺点：</p>
+<p>计算简单，效率较高；</p>
+<p>只考虑像素点灰度值本身的特征，一般不考虑空间特征，因此对噪声比较敏感，鲁棒性不高。</p>
+<p>从前面的介绍里我们可以看出，阈值分割方法的最关键就在于阈值的选择。若将智能遗传算法应用在阀值筛选上，选取能最优分割图像的阀值，这可能是基于阀值分割的图像分割法的发展趋势。</p>
+<h5 id="1-1-固定阈值分割"><a href="#1-1-固定阈值分割" class="headerlink" title="1.1 固定阈值分割"></a>1.1 固定阈值分割</h5><p>固定某像素值为分割点。</p>
+<h5 id="1-2-直方图双峰法："><a href="#1-2-直方图双峰法：" class="headerlink" title="1.2 直方图双峰法："></a>1.2 直方图双峰法：</h5><p>Prewitt 等人于六十年代中期提出的直方图双峰法(也称 mode 法) 是典型的全局单阈值分割方法。</p>
+<p>该方法的基本思想是：假设图像中有明显的目标和背景，则其灰度直方图呈双峰分布，当灰度级直方图具有双峰特性时，选取两峰之间的谷对应的灰度级作为阈值。如果背景的灰度值在整个图像中可以合理地看作为恒定，而且所有物体与背景都具有几乎相同的对比度，那么，选择一个正确的、固定的全局阈值会有较好的效果.</p>
+<p>算法实现：找到第一个峰值和第二个峰值,再找到第一和第二个峰值之间的谷值，谷值就是那个阀值。</p>
+<h5 id="1-3-迭代阈值图像分割"><a href="#1-3-迭代阈值图像分割" class="headerlink" title="1.3 迭代阈值图像分割:"></a>1.3 迭代阈值图像分割:</h5><p>Step 1．统计图像灰度直方图,求出图像的最大灰度值和最小灰度值，分别记为$Z_{max}$和$Z_{min}$，令初始阈值$T_0 =  (Z_{min}+Z_{max})/2$；</p>
+<p>Step 2． 根据阈值$T_k$将图象分割为前景和背景，计算小于$T_k$所有灰度的均值$Z_{min}$，和大于$T_k$的所有灰度的均值$Z_{max}$。</p>
+<p>Step 3． 求出新阈值$T_{k+1} = (Z_{min}+Z_{max})/2$；</p>
+<p>Step 4． 若$T_k == T_{k+1}$，则所得即为阈值；否则转2，迭代计算。</p>
+<h5 id="1-4-自适应阈值图像分割"><a href="#1-4-自适应阈值图像分割" class="headerlink" title="1.4 自适应阈值图像分割:"></a>1.4 自适应阈值图像分割:</h5><p>有时候物体和背景的对比度在图像中不是处处一样的，普通阈值分割难以起作用。这时候可以根据图像的局部特征分别采用不同的阈值进行分割。只要我们将图像分为几个区域，分别选择阈值，或动态地根据一定邻域范围选择每点处的阈值，从而进行图像分割。</p>
+<h5 id="1-5-大津法OTSU-最大类间方差法-："><a href="#1-5-大津法OTSU-最大类间方差法-：" class="headerlink" title="1.5 大津法OTSU (最大类间方差法)："></a>1.5 大津法OTSU (最大类间方差法)：</h5><p>日本学者大津在1979年提出的自适应阈值确定方法。 按照图像的灰度特性，将图像分为背景和目标两部分。背景和目标之间的类间方差越大,说明构成图像的2部分的差别越大,当部分目标错分为背景或部分背景错分为目标都会导致2部分差别变小。因此,使类间方差最大的分割意味着错分概率最小。</p>
+<h5 id="1-6-均值法"><a href="#1-6-均值法" class="headerlink" title="1.6 均值法:"></a>1.6 均值法:</h5><p>把图像分成m*n块子图，求取每一块子图的灰度均值, 将所有像素灰度值之和除以像素点的数量，这个均值就是阈值了。这种方法明显不比大津法好，因为均值法和大津法都是从图像整体来考虑阈值的，但是大津法找了一个类间方差最大值来求出最佳阈值的；这两种方法子图越多应该分割效果会好一点，但效率可能会变慢。</p>
+<h5 id="1-7-最佳阈值"><a href="#1-7-最佳阈值" class="headerlink" title="1.7 最佳阈值:"></a>1.7 最佳阈值:</h5><p>阈值选择需要根据具体问题来确定，一般通过实验来确定。如对某类图片，可以分析其直方图等。</p>
+<h4 id="2-基于边缘的分割方法"><a href="#2-基于边缘的分割方法" class="headerlink" title="2. 基于边缘的分割方法"></a>2. 基于边缘的分割方法</h4><p>图像中两个不同区域的边界线上连续的像素点的集合，是图像局部特征不连续性的反映，体现了灰度、颜色、纹理等图像特性的突变。通常情况下，基于边缘的分割方法指的是基于灰度值的边缘检测，它是建立在边缘灰度值会呈现出阶跃型或屋顶型变化这一观测基础上的方法。阶跃型边缘两边像素点的灰度值存在着明显的差异，而屋顶型边缘则位于灰度值上升或下降的转折处。如果将图片从空间域通过傅里叶变换到频率域，边缘就对应着高频部分，这是一种非常简单的边缘检测算法。最简单的边缘检测方法是微分算子法，即使用一阶导数的极值与二阶导数的零点来确定边缘，具体实现时可以使用<strong>图像与模板进行卷积</strong>来完成。</p>
+<p>   边缘检测的优缺点：</p>
+<ol>
+<li>边缘定位准确；</li>
+<li>速度快；</li>
+<li>不能保证边缘的连续性和封闭性；</li>
+<li>在高细节区域存在大量的碎边缘，难以形成一个大区域，但是又不宜将高细节区域分成小碎片；</li>
+</ol>
+<p>由于上述的3,4两个难点，边缘检测只能产生边缘点，而非完整意义上的图像分割过程。这也就是说，在边缘点信息获取到之后还需要后续的处理或者其他相关算法相结合才能完成分割任务。<br>在以后的研究当中，用于提取初始边缘点的自适应阈值选取、用于图像的层次分割的更大区域的选取以及如何确认重要边缘以去除假边缘将变得非常重要。</p>
+<p>边缘角点和兴趣点的检测器有：</p>
+<h5 id="2-1-Canny边缘检测器："><a href="#2-1-Canny边缘检测器：" class="headerlink" title="2.1 Canny边缘检测器："></a>2.1 Canny边缘检测器：</h5><p>将图像P模糊化，然后与一堆正交微分滤波器（如Prewitt滤波器）做<strong>卷积</strong>生成分别包括水平和垂直方向上的导数的图像H和V，对像素(i,j)计算其梯度方向和幅度。若幅度超过临界值就分配一条边缘（此处称为阈值法，但效果不佳）。canny使用非极大抑制的方法对那些不需要响应的进行删除。</p>
+<h5 id="2-2-Harris角点检测器："><a href="#2-2-Harris角点检测器：" class="headerlink" title="2.2 Harris角点检测器："></a>2.2 Harris角点检测器：</h5><p>对每个点周围的水平方向垂直方向的据ubu梯度进行考虑。目的在于找到图像中亮度在两个方向上均发生变化的点，而非一个方向（一条边缘）或者零个方向（平坦区域）。Harris角点检测器是基于对图像结构张量的决策。</p>
+<h5 id="2-3-SIFT检测器"><a href="#2-3-SIFT检测器" class="headerlink" title="2.3 SIFT检测器:"></a>2.3 SIFT检测器:</h5><p>尺度不变特征转换，检测是用来识别兴趣点的第二中方法。不同与Harris角点检测器，SIFT将尺度和方向与结果中的兴趣点相关联。为了找到兴趣点，交替使用多种算子。</p>
+<h5 id="2-4-SURF检测器"><a href="#2-4-SURF检测器" class="headerlink" title="2.4 SURF检测器"></a>2.4 SURF检测器</h5><p>SIFT的改进版。</p>
+<h5 id="基于小波分析和小波变换的图像分割方法"><a href="#基于小波分析和小波变换的图像分割方法" class="headerlink" title="基于小波分析和小波变换的图像分割方法"></a>基于小波分析和小波变换的图像分割方法</h5><p>小波变换是近年来得到的广泛应用的数学工具，也是现在数字图像处理必学部分，它在时间域和频率域上都有量高的局部化性质，能将时域和频域统一于一体来研究信号。而且小波变换具有多尺度特性，能够在不同尺度上对信号进行分析，因此在图像分割方面的得到了应用。</p>
+<p>二进小波变换具有检测二元函数的局部突变能力，因此可作为图像边缘检测工具。图像的边缘出现在图像局部灰度不连续处，对应于二进小波变换的模极大值点。通过检测小波变换模极大值点可以确定图像的边缘小波变换位于各个尺度上，而每个尺度上的小波变换都能提供一定的边缘信息，因此可进行多尺度边缘检测来得到比较理想的图像边缘。</p>
+<p>另外，将小波和其他方法结合起来处理图像分割的问题也得到了广泛研究，比如一种局部自适应阈值法就是将Hilbert图像扫描和小波相结合，从而获得了连续光滑的阈值曲线。</p>
+<h4 id="3-基于区域的分割方法"><a href="#3-基于区域的分割方法" class="headerlink" title="3. 基于区域的分割方法"></a>3. 基于区域的分割方法</h4><p>基于区域的分割方法是以直接寻找区域为基础的分割技术，基于区域提取方法有两种基本形式：一种是区域生长，从单个像素出发，逐步合并以形成所需要的分割区域；另一种是从全局出发，逐步切割至所需的分割区域。</p>
+<h5 id="3-1-种子区域生长法"><a href="#3-1-种子区域生长法" class="headerlink" title="3.1 种子区域生长法"></a>3.1 种子区域生长法</h5><p>区域生长是从一组代表不同生长区域的种子像素开始，接下来将种子像素邻域里符合条件的像素合并到种子像素所代表的生长区域中，并将新添加的像素作为新的种子像素继续合并过程，直到找不到符合条件的新像素为止，该方法的关键是选择合适的初始种子像素以及合理的生长准则。最早的区域生长图像分割方法是由Levine等人提出。</p>
+<p>区域生长算法需要解决的三个问题：</p>
+<ol>
+<li>选择或确定一组能正确代表所需区域的种子像素；</li>
+<li>确定在生长过程中能将相邻像素包括进来的准则；</li>
+<li>指定让生长过程停止的条件或规则。</li>
+</ol>
+<h5 id="3-2-区域分裂合并法"><a href="#3-2-区域分裂合并法" class="headerlink" title="3.2 区域分裂合并法"></a>3.2 区域分裂合并法</h5><p>区域分裂合并法（Gonzalez，2002）可以说是区域生长的逆过程，从整幅图像出发，确定分裂合并的准则，然后将图像任意分成若干互不相交的区域，按准则对这些区域进行分裂合并。</p>
+<p>四叉树分解法就是一种典型的区域分裂合并法，基本算法如下：</p>
+<ol>
+<li>对于任一区域，如果$H(R_i)=FALSE$就将其分裂成不重叠的四等分；</li>
+<li>对相邻的两个区域$R_i$和$R_j$，它们也可以大小不同（即不在同一层），如果条件$H(R_iUR_j)=TURE$满足，就将它们合并起来；</li>
+<li>如果进一步的分裂或合并都不可能，则结束。</li>
+</ol>
+<p>区域分裂合并算法优缺点：</p>
+<ol>
+<li>对复杂图像分割效果好；</li>
+<li>算法复杂，计算量大；</li>
+<li>分裂有可能破怪区域的边界。</li>
+</ol>
+<p>在实际应用当中通常将区域生长算法和区域分裂合并算法结合使用，该类算法对某些复杂物体定义的复杂场景的分割或者对某些自然景物的分割等类似先验知识不足的图像分割效果较为理想。</p>
+<h5 id="3-3-分水岭法"><a href="#3-3-分水岭法" class="headerlink" title="3.3 分水岭法"></a>3.3 分水岭法</h5><p>分水岭分割方法，是一种基于拓扑理论的数学形态学的分割方法，其基本思想是把图像看作是测地学上的拓扑地貌，图像中每一点像素的灰度值表示该点的海拔高度，每一个局部极小值及其影响区域称为集水盆，而集水盆的边界则形成分水岭。分水岭的概念和形成可以通过模拟浸入过程来说明。在每一个局部极小值表面，刺穿一个小孔，然后把整个模型慢慢浸入水中，随着浸入的加深，每一个局部极小值的影响域慢慢向外扩展，在两个集水盆汇合处构筑大坝，即形成分水岭。</p>
+<p>分水岭对微弱边缘具有良好的响应，图像中的噪声、物体表面细微的灰度变化都有可能产生过度分割的现象，但是这也同时能够保证得到封闭连续边缘。同时，分水岭算法得到的封闭的集水盆也为分析图像的区域特征提供了可能。</p>
+<h4 id="4-基于图论的分割方法"><a href="#4-基于图论的分割方法" class="headerlink" title="4. 基于图论的分割方法"></a>4. 基于图论的分割方法</h4><p>此类方法基于图论的方法利用图论领域的理论和方法，将图像映射为带权无向图，把像素视作节点，将图像分割问题看作是图的顶点划分问题，利用最小剪切准则得到图像的最佳分割。此类方法把图像分割问题与图的最小割(MIN-CUT)问题相关联，通常做法是将待分割的图像映射为带权无向图G=(V，E)，其中, $V={ v_{1} ，…， v_{n} }$是顶点的集合，E为边的集合。图中每个节点N∈V对应于图像中的每个像素，每条边∈E连接着一对相邻的像素，边的权值$w( v_{i}，v_{j} )$，其中$ (v_{i}，v_{j})∈E$，表示了相邻像素之间在灰度、颜色或纹理方面的非负相似度。而对图像的一个分割S就是对图的一个剪切，被分割的每个区域C∈S对应着图中的一个子图。</p>
+<p>分割的原则就是使划分后的子图在内部保持相似度最大，而子图之间的相似度保持最小。我们以一个两类的分割为例，把G = (V,E) 分成两个子集A,B,另：$ A\cup B=V$，$A\cap B=\phi$ ，$CUT(A,B) = \Sigma_{\mu\in A，v\in B}w(\mu,v) $, 其中 $w(\mu,v) $, 是权重(weight), 最小割就是让上式的值最小的分割。</p>
+<p>基于图论的代表有NormalizedCut，GraphCut和GrabCut等方法.</p>
+<h5 id="4-1-NormalizedCut"><a href="#4-1-NormalizedCut" class="headerlink" title="4.1 NormalizedCut"></a>4.1 NormalizedCut</h5><p>最小化分割解决了把权重图G分成两部分的任务，但是问题来了，如下图所示，想要的结果是中间实线表示的分割，但是最小化切割却切掉了最边缘的角。这中情况很容易理解，因为最小化切割就是让CUT(A,B)的值最小的情况，而边缘处CUT值确实是最小，因此我们输最小化切割时会有偏差的(bias)。如何去除这种偏差就要引入Normalized Cut算法了。</p>
+<p><img src="/medias/pic_md/Knowledge/ConventioanlSegmentation1.png" alt="Conventioanl Segmentation1"><br>思路很简单，将Cut normalize一下，除以表现顶点集大小的某种量度(如 vol A = 所有A中顶点集的度之和，含义是A中所有点到图中所有点的权重的和)， 也就是$NormalizeCut(A, B) = Cut(A, B) / volA + Cut(A, B) / volB$，通过公式可以很清晰的看到NormalizeCut在追求不同子集间点的权重最小值的同时也追求同一子集间点的权重和最大值。</p>
+<h5 id="4-2-GraphCut-图割"><a href="#4-2-GraphCut-图割" class="headerlink" title="4.2 GraphCut (图割)"></a>4.2 GraphCut (图割)</h5><p>Graph Cuts图是在普通图的基础上多了2个顶点，这2个顶点分别用符号”S”和”T”表示，称为终端顶点。其它所有的顶点都必须和这2个顶点相连形成边集合中的一部分，所以Graph Cuts中有两种顶点，也有两种边，第一种普通顶点对应于图像中的每个像素。每两个邻域顶点的连接就是一条边。这种边也叫n-links。除图像像素外，还有另外两个终端顶点，叫S源点和T汇点。每个普通顶点和这2个终端顶点之间都有连接，组成第二种边,这种边也叫t-links，如下图所示。</p>
+<p><img src="/medias/pic_md/Knowledge/ConventioanlSegmentation2.png" alt="ConventioanlSegmentation2"><br>Graph Cuts中的Cuts是指这样一个边的集合，这些边集合包括了上面定义的2种边，该集合中所有边的断开会导致残留“S”和“T”图的分开，所以就称为“割”。如果一个割，它的边的所有权值之和最小，那么这个就称为最小割，也就是图割的结果。根据网络中最大流和最小割等价的原理，将图像的最优分割问题转化为求解对应图的最小割问题。由Boykov和Kolmogorov发明的max-flow/min-cut算法[1，4]就可以用来获得S-T图的最小割，这个最小割把图的顶点划分为两个不相交的子集S和T，其中s ∈S，t∈ T和S∪T=V 。这两个子集就对应于图像的前景像素集和背景像素集，那就相当于完成了图像分割。</p>
+<h5 id="4-3-GrabCut-分割和抠图"><a href="#4-3-GrabCut-分割和抠图" class="headerlink" title="4.3 GrabCut 分割和抠图"></a>4.3 GrabCut 分割和抠图</h5><p>Graph Cuts 算法利用了图像的像素灰度信息和区域边界信息，代价函数构建在全局最优的框架下，保证了分割效果。但Graph Cuts 是NP 难问题，且分割结果更倾向于具有相同的类内相似度。Rother 等人提出了基于迭代的图割方法，称为Grab Cut 算法。该算法使用高斯混合模型对目标和背景建模，利用了图像的RGB 色彩信息和边界信息，通过少量的用户交互操作得到非常好的分割效果。</p>
+<p>Graph Cuts是Graphcut的改进版，是迭代的GraphCut。改进包括：</p>
+<ol>
+<li>将基于灰度分布的模型替换为高斯混合模型（Gaussian Mixture Model，GMM）以支持彩色图片;</li>
+<li>将能一次性得到结果的算法改成了『强大的』迭代流程；将用户的交互简化到只需要框选前景物体即可。</li>
+</ol>
+<p>与Graph Cut不同处：</p>
+<ol>
+<li>Graph Cut的目标和背景的模型是灰度直方图，Grab Cut取代为RGB三通道的混合高斯模型GMM;</li>
+<li>Graph Cut的能量最小化（分割）是一次达到的，而Grab Cut取代为一个不断进行分割估计和模型参数学习的交互迭代过程;</li>
+<li>Graph Cut需要用户指定目标和背景的一些种子点，但是Grab Cut只需要提供背景区域的像素集就可以了。也就是说你只需要框选目标，那么在方框外的像素全部当成背景，这时候就可以对GMM进行建模和完成良好的分割了。即Grab Cut允许不完全的标注（incomplete labelling）。彩色像素值的稀疏问题比灰度图要严重得多（256 vs 17M），所以，继续使用histogram是不现实的，需要信息压缩得更好一点的模型，作者在这里参考前人，对前景和背景各建了K=5的高斯混合模型。</li>
+<li>GrabCut是按颜色分布和边缘对比度来分割图片的，对一些常见的与此原则相悖的图片，效果确实不好。比如前景人物的帽子、鞋、墨镜，通常颜色跟前景主体有较大区别；再如前景中的孔，有可能由于颜色区分和边缘的对比度不足，导致边缘的惩罚占上风，而没有扣出来背景。所以，GrabCut还是保留了人工修正的操作，定义了两种标记：绝对是背景和可能是前景。对分割错误人工修正后，分割还是可以比较准确的。对自然场景图片的分割，比Bayes matte等方法得到的边缘明显看起来舒服得多。</li>
+</ol>
+<h4 id="5-基于能量泛函的分割方法"><a href="#5-基于能量泛函的分割方法" class="headerlink" title="5. 基于能量泛函的分割方法"></a>5. 基于能量泛函的分割方法</h4><p>该类方法主要指的是活动轮廓模型（active contour model）以及在其基础上发展出来的算法，其基本思想是使用连续曲线来表达目标边缘，并定义一个能量泛函使得其自变量包括边缘曲线，因此分割过程就转变为求解能量泛函的最小值的过程，一般可通过求解函数对应的欧拉(Euler．Lagrange)方程来实现，能量达到最小时的曲线位置就是目标的轮廓所在。</p>
+<p>活动轮廓模型逐渐形成了不同的分类方式，较常见的是根据曲线演化方式的不同，将活动轮廓模型分为基于边界、基于区域和混合型活动轮廓模型。</p>
+<p>按照模型中曲线表达形式的不同，活动轮廓模型可以分为两大类：参数活动轮廓模型（parametric active contour model）和几何活动轮廓模型（geometric active contour model）。</p>
+<h5 id="5-1-参数主动轮廓模型（parametric-active-contour-model）"><a href="#5-1-参数主动轮廓模型（parametric-active-contour-model）" class="headerlink" title="5.1 参数主动轮廓模型（parametric active contour model）:"></a>5.1 参数主动轮廓模型（parametric active contour model）:</h5><p>参数活动轮廓模型基于Lagrange框架，将曲线或曲面的形变以参数化形式表达，最具代表性的是由Kasset a1(1987)所提出的Snake模型。该类模型在早期的生物图像分割领域得到了成功的应用，但其存在着分割结果受初始轮廓的设置影响较大以及难以处理曲线拓扑结构变化等缺点，此外其能量泛函只依赖于曲线参数的选择，与物体的几何形状无关，这也限制了其进一步的应用。</p>
+<p>Snake模型: Michael Kass et al. Snakes: Active contour models. International Journal of Computer Vision, pages 321-331, 1987.</p>
+<p>Snake定义为能量极小化的样条曲线，它在来自曲线自身的内力和来自图像数据的外力的共同作用下移动到感兴趣的边缘，内力用于约束曲线形状，而外力则引导曲线到特征此边缘。参数主动轮廓模型的特点是将初始曲线置于目标区域附近，无需人为设定曲线的的演化是收缩或膨胀，其优点是能够与模型直接进行交互，且模型表达紧凑，实现速度快；其缺点是难以处理模型拓扑结构的变化。比如曲线的合并或分裂等。而使用水平集（level set）的几何活动轮廓方法恰好解决了这一问题。</p>
+<p>基本Snakes模型的能量函数由三项组成，弹性能量和弯曲能量合称内部能量（内部力），用于控制轮廓线的弹性形变，起到保持轮廓连续性和平滑性的作用。而第三项代表外部能量，也被称为图像能量，表示变形曲线与图像局部特征吻合的情况。内部能量仅仅跟snake的形状有关，而跟图像数据无关。而外部能量仅仅跟图像数据有关。在某一点的α和β的值决定曲线可以在这一点伸展和弯曲的程度。最终对图像的分割转化为求解能量函数Etotal(v)极小化（最小化轮廓的能量）。在能量函数极小化过程中，弹性能量迅速把轮廓线压缩成一个光滑的圆，弯曲能量驱使轮廓线成为光滑曲线或直线，而图像力则使轮廓线向图像的高梯度位置靠拢。基本Snakes模型就是在这3个力的联合作用下工作的。</p>
+<p>snake相对于经典的特征提取方法有以下优点：</p>
+<ol>
+<li>通过正确设置和项前系数，可交互方式控制snake;</li>
+<li>容易操控，因为图像力是以直观的方式表现;</li>
+<li>在寻找最小能量状态的时候它们是自主的和自适应的;</li>
+<li>可以通过在图像能量函数中加入高斯平滑而对图像尺度敏感;</li>
+<li>可以用于跟踪时间或者空间维度上的动态目标。</li>
+</ol>
+<p>snake的缺点：</p>
+<ol>
+<li>初始位置不同使得结果不同;</li>
+<li>经常陷入局部最小状态，这也许可以通过使用模拟退火技术来克服，代价就是计算时间增加;</li>
+<li>在最小化整个轮廓路径上的能量过程中经常忽略微小特征;</li>
+<li>精度由能量最小化技术中使用的收敛标准控制；更高的精度要求更严格的收敛标准，因此需要更长的计算时间。</li>
+</ol>
+<h5 id="5-2-ASM-Active-Shape-Model-主动形状模型"><a href="#5-2-ASM-Active-Shape-Model-主动形状模型" class="headerlink" title="5.2 ASM(Active Shape Model)主动形状模型"></a>5.2 ASM(Active Shape Model)主动形状模型</h5><p>Cootes T F, Taylor C J. Active Shape Models — ‘Smart Snakes’[M]// BMVC92. Springer London, 1992:266–275.</p>
+<p>ASM（主动形状模型）是建立在PDM（点分布模型）的基础上，通过训练图像样本获取训练图像样本的特征点分布的统计信息，并且获取特征点允许存在的变化方向，实现在目标图像上寻找对应的特征点的位置。训练样本需要手动的标记所有的特征点的位置，记录特征点的坐标，并且计算每一个特征点对应的局部灰度模型作为局部特征点调整用的特征向量。在将训练好的模型放在目标图像上，寻找每一个特征点的下一个位置的时候，采用局部灰度模型寻找在当前特征点指定方向上局部灰度模型马氏距离最小的特征点作为当前特征点即将移动到的位置，称为suggested point, 找到所有的suggested points就可以获得一个搜索的suggested shape, 然后将当前的模型通过调整参数使得当前的模型最可能相似的调整到suggest shape，重复迭代直到实现收敛。</p>
+<h5 id="5-3-AAM-Active-Appearance-Models"><a href="#5-3-AAM-Active-Appearance-Models" class="headerlink" title="5.3 AAM(Active Appearance Models)"></a>5.3 AAM(Active Appearance Models)</h5><p>Cootes T F, Edwards G J, Taylor C J. Active Appearance Models[C]// European Conference on Computer Vision. Springer Berlin Heidelberg, 1998:484-498.</p>
+<p>ASM是基于统计形状模型的基础上进行的，而AAM则是在ASM的基础上，进一步对纹理（将人脸图像变形到平均形状而得到的形状无关图像）进行统计建模，并将形状和纹理两个统计模型进一步融合为表观模型。</p>
+<p>AAM模型相对于ASM模型的改进为：</p>
+<ol>
+<li>使用两个统计模型融合 取代 ASM的灰度模型。</li>
+<li>主要对特征点的特征描述子进行了改进，增加了描述子的复杂度和鲁棒性</li>
+</ol>
+<h5 id="5-4-CLM-Constrained-local-model-有约束的局部模型"><a href="#5-4-CLM-Constrained-local-model-有约束的局部模型" class="headerlink" title="5.4 CLM(Constrained local model)有约束的局部模型"></a>5.4 CLM(Constrained local model)有约束的局部模型</h5><p>CLM是有约束的局部模型，ASM也属于CLM的一种。CLM通过初始化平均脸的位置，然后让每个平均脸上的特征点在其邻域位置上进行搜索匹配来完成人脸点检测。整个过程分两个阶段：模型构建阶段和点拟合阶段。模型构建阶段又可以细分两个不同模型的构建：</p>
+<p>形状模型构建: 对人脸模型形状进行建模，说白了就是一个ASM的点分布函数（PDM），它描述了形状变化遵循的准则.</p>
+<p>Patch模型构建: 对每个特征点周围邻域进行建模，也就说建立一个特征点匹配准则，怎么判断特征点是最佳匹配.</p>
+<h5 id="5-5-GAC-geometric-active-contour-model-几何主动轮廓模型"><a href="#5-5-GAC-geometric-active-contour-model-几何主动轮廓模型" class="headerlink" title="5.5 GAC(geometric active contour model)几何主动轮廓模型:"></a>5.5 GAC(geometric active contour model)几何主动轮廓模型:</h5><p>S.Osher,J.A.Sethian,Fronts propagating with curvature dependent speed:algorithms basedon Hamilton-Jacobi formulations.Journal of Computational Physics,1988,79:12—49</p>
+<p>几何活动轮廓模型的曲线运动过程是基于曲线的几何度量参数而非曲线的表达参数，因此可以较好地处理拓扑结构的变化，并可以解决参数活动轮廓模型难以解决的问题。而水平集（Level Set）方法（Osher，1988）的引入，则极大地推动了几何活动轮廓模型的发展，因此几何活动轮廓模型一般也可被称为水平集方法。</p>
+<p>几何活动轮廓模型是以曲线演化理论和水平集方法为理论基础,继参数活动轮廓模型后形变模型的又一发展,是图像分割和边界提取的重要工具之一。相对于参数活动轮廓模型,几何活动轮廓模型具有很多优点,如可以处理曲线的拓扑变化、对初始位置不敏感、具有稳定的数值解等.</p>
+<p>几何活动轮廓模型又可分为基于边界的活动轮廓模型、基于区域的活动轮廓模型。基于边界的活动轮廓模型主要依赖图像的边缘信息控制曲线的运动速度。在图像边缘强度较弱或是远离边缘的地方，轮廓曲线运动速度较大，而在图像边缘强度较强的地方，轮廓曲线运动速度较小甚至停止，使得最终的轮廓曲线运动到边缘位置.</p>
+<h4 id="6-基于遗传算法的图像分割"><a href="#6-基于遗传算法的图像分割" class="headerlink" title="6. 基于遗传算法的图像分割"></a>6. 基于遗传算法的图像分割</h4><p>遗传算法（Genetic Algorithms，简称GA）是1973年由美国教授Holland提出的，是一种借鉴生物界自然选择和自然遗传机制的随机化搜索算法。是仿生学在数学领域的应用。其基本思想是，模拟由一些基因串控制的生物群体的进化过程，把该过程的原理应用到搜索算法中，以提高寻优的速度和质量。此算法的搜索过程不直接作用在变量上，而是在参数集进行了编码的个体，这使得遗传算法可直接对结构对象（图像）进行操作。整个搜索过程是从一组解迭代到另一组解，采用同时处理群体中多个个体的方法，降低了陷入局部最优解的可能性，并易于并行化。搜索过程采用概率的变迁规则来指导搜索方向，而不采用确定性搜索规则，而且对搜索空间没有任何特殊要求（如连通性、凸性等），只利用适应性信息，不需要导数等其他辅助信息，适应范围广。</p>
+<p>遗传算法擅长于全局搜索，但局部搜索能力不足，所以常把遗传算法和其他算法结合起来应用。将遗传算法运用到图像处理主要是考虑到遗传算法具有与问题领域无关且快速随机的搜索能力。其搜索从群体出发，具有潜在的并行性，可以进行多个个体的同时比较，能有效的加快图像处理的速度。但是遗传算法也有其缺点：搜索所使用的评价函数的设计、初始种群的选择有一定的依赖性等。要是能够结合一些启发算法进行改进且遗传算法的并行机制的潜力得到充分的利用，这是当前遗传算法在图像处理中的一个研究热点。</p>
+<h4 id="7-基于聚类的图像分割"><a href="#7-基于聚类的图像分割" class="headerlink" title="7. 基于聚类的图像分割"></a>7. 基于聚类的图像分割</h4><p>基于聚类的图像分割将图像分割问题转化为模式识别的聚类分析。  K均值、模糊C-均值算法(Fuzzy C-Means,简称FCM)是最常用的聚类算法。</p>
+<p>K均值算法先选K个初始类均值，然后将每个像素归入均值离它最近的类并计算新的类均值。迭代执行前面的步骤直到新旧类均值之差小于某一阈值。</p>
+<p>模糊C均值算法是在模糊数学基础上对K均值算法的推广，是通过最优化一个模糊目标函数实现聚类，它不像K均值聚类那样认为每个点只能属于某一类，而是赋予每个点一个对各类的隶属度，用隶属度更好地描述边缘像素亦此亦彼的特点，适合处理事物内在的不确定性。利用模糊C均值(FCM)非监督模糊聚类标定的特点进行图像分割，可以减少人为的干预，且较适合图像中存在不确定性和模糊性的特点。</p>
+<p>聚类方法应注意几个问题：</p>
+<ol>
+<li>聚类的类数如何确定。</li>
+<li>怎样确定聚类的有效性准则。</li>
+<li>聚类中心的位置和特性事先不清楚时，如何设置初始值。</li>
+<li>运算的开销。</li>
+</ol>
+<p>并且FCM算法对初始参数极为敏感，有时需要人工干预参数的初始化以接近全局最优解，提高分割速度。另外，传统FCM算法没有考虑空间信息，对噪声和灰度不均匀敏感。</p>
+<p>参考:<br><a href="https://zhuanlan.zhihu.com/p/30732385" target="_blank" rel="noopener">图像分割 传统方法 整理</a><br><a href="https://www.jishuwen.com/d/2Ddq" target="_blank" rel="noopener">最全综述 | 图像分割算法</a><br><a href="https://juejin.im/entry/5bea5e7ef265da61553a5e28" target="_blank" rel="noopener">图像分割技术介绍</a><br>《计算机视觉：模型、学习和推理》</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识带给我许多温暖</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/Alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/Wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone, qq, weibo, douban"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">
+                        <i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Reprint policy:
+                    </span>
+                    <a href="http://huiyu-li.github.io" class="b-link-green">Cerry</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2019/08/05/Knowledge/传统的图像分割方法/" class="b-link-green">传统的图像分割方法</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '06bb001ef9206df2cfda',
+        clientSecret: '7f63969ef02f6d713d9024fb2c4f992b5a0158bf',
+        repo: 'huiyu-li.github.io',
+        owner: 'Huiyu-Li',
+        admin: ["Huiyu-Li"],
+        id: '2019-08-05T00-00-00',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/2019/11/27/Tools/2019-11-27-让谷歌搜索到自己再GitHub上的博客/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="让谷歌搜索到自己在GitHub上的博客">
+                        
+                        <span class="card-title">让谷歌搜索到自己在GitHub上的博客</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">许久不写博客了，假借CSDN的便捷和随性，其实是因为自己的懒伞，打算从今天起重新拾起自己的私人博客。还是那句话，因为喜欢就好好去爱。不管是为一个人，还是对一件事，很多时候我们贪恋的，都是当初那份恰如其分的感觉，时间走过，当初的那份记忆和感觉</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-11-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Website/" class="post-category" target="_blank">
+                                    Website
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hexo/" target="_blank">
+                        <span class="chip bg-color">Hexo</span>
+                    </a>
+                    
+                    <a href="/tags/Google/" target="_blank">
+                        <span class="chip bg-color">Google</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/08/04/Medical Image/2017 LiTS Winning algorithmic properties/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="2017 LiTS Winning algorithmic properties">
+                        
+                        <span class="card-title">2017 LiTS Winning algorithmic properties</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">1. U-Net-based architecture2. Cascaded approach3. Residual connections4. Ensemble learning
+train 3 different U-Net deriv</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Medical-Image/" class="post-category" target="_blank">
+                                    Medical Image
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/LiTS/" target="_blank">
+                        <span class="chip bg-color">LiTS</span>
+                    </a>
+                    
+                    <a href="/tags/Winning-methods/" target="_blank">
+                        <span class="chip bg-color">Winning methods</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + 'From: Cerry<br />'
+            + 'Author: Huiyu<br />'
+            + 'Link: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+    </div>
+    <div class="col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+			Copyright&nbsp;&copy;
+            <a href="http://huiyu-li.github.io" target="_blank">Huiyu</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Huiyu-Li" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:huizilovereaing@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2200932126" class="tooltipped" data-tooltip="QQ联系我: 2200932126" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
