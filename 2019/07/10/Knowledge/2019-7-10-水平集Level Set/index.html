@@ -4,9 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="2017 LiTS Winning algorithmic properties, Cerry">
-    <meta name="description" content="1. U-Net-based architecture2. Cascaded approach3. Residual connections4. Ensemble learning
-train 3 different U-Net deriv">
+    <meta name="keywords" content="水平集-Level Set, Cerry">
+    <meta name="description" content="水平集（Level Set）曲线演化的直观解释   假设$X(t)$表示一平面曲线，$T$表示切线，$N$表示法线。因为切向量$T$和法向量$N$互相垂直，所以平面上任何曲线都可以用曲线上任何一点的$T$和$N$的线性组合来表示：$$\fr">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@ train 3 different U-Net deriv">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>2017 LiTS Winning algorithmic properties | Cerry</title>
+    <title>水平集-Level Set | Cerry</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -265,13 +264,13 @@ train 3 different U-Net deriv">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/pic_md/Knowledge/LevelSet1.png')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        2017 LiTS Winning algorithmic properties
+                        水平集-Level Set
                     </div>
                 </div>
             </div>
@@ -363,12 +362,8 @@ train 3 different U-Net deriv">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/LiTS/" target="_blank">
-                                <span class="chip bg-color">LiTS</span>
-                            </a>
-                        
-                            <a href="/tags/Winning-methods/" target="_blank">
-                                <span class="chip bg-color">Winning methods</span>
+                            <a href="/tags/Level-Set/" target="_blank">
+                                <span class="chip bg-color">Level Set</span>
                             </a>
                         
                     </div>
@@ -379,8 +374,8 @@ train 3 different U-Net deriv">
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Medical-Image/" class="post-category" target="_blank">
-                                Medical Image
+                            <a href="/categories/Knowledge/" class="post-category" target="_blank">
+                                Knowledge
                             </a>
                         
                     </div>
@@ -391,7 +386,7 @@ train 3 different U-Net deriv">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-08-04
+                    2019-07-10
                 </div>
 
                 
@@ -407,67 +402,10 @@ train 3 different U-Net deriv">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="1-U-Net-based-architecture"><a href="#1-U-Net-based-architecture" class="headerlink" title="1. U-Net-based architecture"></a>1. U-Net-based architecture</h4><h4 id="2-Cascaded-approach"><a href="#2-Cascaded-approach" class="headerlink" title="2. Cascaded approach"></a>2. Cascaded approach</h4><h4 id="3-Residual-connections"><a href="#3-Residual-connections" class="headerlink" title="3. Residual connections"></a>3. Residual connections</h4><h4 id="4-Ensemble-learning"><a href="#4-Ensemble-learning" class="headerlink" title="4. Ensemble learning"></a>4. Ensemble learning</h4><ul>
-<li><p><strong>train 3 different U-Net derived networks on resampled axial, sagittal and coronal slices, respectively for liver segmentation and combines them via the aforementioned small 3D network.</strong>This allows each network to view lesions and learn distinguishing features along a different coordinate axis and then combine its individual knowledge with the other networks to yield a more holistic multi axes aware classifier. </p>
-</li>
-<li><p><strong>employ a shape-invariant model fusion approach by providing multiple network with differently rescaled input data and then averaging the results.</strong> This allows to more easily detect formerly small lesions in its enlarged form by one network while<br>simultaneous letting another network identify the exact image boundaries in images without additional resize-induced blurring. </p>
-</li>
-<li><p>averaging over results from the four flip orientations as well as a slightly different model<br>architecture. </p>
-</li>
-<li><p><strong>5-fold cross validation combined with a bagging ensemble technique<br>to fuse the results of 6 individual models.</strong></p>
-</li>
-<li><p>Zou as MICCAIs winning method relies heavily on ensemble learning using it in both the liver segmentation and the tumor segmentation step as the first part and second part of a cascaded approach. Each of these two parts are further divided into two subparts, one of which using 2D slice-wise and the other 2.5D stack-wise inputs to train multiple networks each. These networks are each implemented with different architecture such as a varying depth, width, number of feature maps or the existence of additional drop-out layers and combine to form one segmentation mask via intersections. The two intersection masks of the slice-input networks and the stack-input networks are the fused via a union operation to generate the final liver or tumor segmentation mask of the cascaded pipeline. This multi-layered ensemble techniques not only allows to detect a large number of different features due to the sheer number of different networks but also applies them at varying levels of granularity along the segmentation pipeline while simultaneously increasing its flexibility by employing different fusion techniques.</p>
-<h4 id="5-Pre-processing"><a href="#5-Pre-processing" class="headerlink" title="5. Pre-processing"></a>5. Pre-processing</h4></li>
-<li><p><strong>HU-value clipping</strong> to only consider a range of relevant liver-related values.</p>
-</li>
-<li><p><strong>data normalization</strong> to simplify the networks learning task by providing more easily comparable images as input.</p>
-</li>
-<li><p><strong>filtered out very small lesions</strong> as noise before training to prevent the network from learning non-realistic tumor structures and potentially produce many false positives.</p>
-</li>
-<li><p>resampled input images for liver segmentation to a fixed resolution of 1x1x2.5mm since the liver region is not as susceptible to resizing induced blurring as lesions due to its size and the network can therefore profit from the easier comparability of inputs due to their homogeneous resolution.</p>
-</li>
-</ul>
-<h4 id="6-Higher-dimensionality"><a href="#6-Higher-dimensionality" class="headerlink" title="6. Higher dimensionality"></a>6. Higher dimensionality</h4><h4 id="7-Data-augmentation"><a href="#7-Data-augmentation" class="headerlink" title="7. Data augmentation"></a>7. Data augmentation</h4><ul>
-<li><p><strong>standard geometric transformations</strong> such as shifting, flipping, rotating, scaling or cropping.</p>
-</li>
-<li><p><strong>elastic deformation</strong></p>
-</li>
-<li><p><strong>random contrast normalization</strong> to each images input channels.</p>
-</li>
-</ul>
-<h4 id="8-Loss-function"><a href="#8-Loss-function" class="headerlink" title="8. Loss function"></a>8. Loss function</h4><ul>
-<li><p><strong>Weighted cross entropy</strong> to mitigate the effects of high class imbalance.</p>
-</li>
-<li><p><strong>Dice loss and Jaccard loss</strong> allows the network to directly optimize its parameters according to the actual final evaluation metric  and thereby also implicitly incorporate class imbalance in its learning process without the explicit introduction of class specific weights other class re-balancing techniques. The Jaccard loss has the additional benefit that its corresponding metric fulfills the triangle inequality and is therefore considered a true distance metric.</p>
-</li>
-<li><p><strong>hard pixel mining learning</strong> and only uses the 10% of voxels with the highest misclassification rate in loss calculations to force the network to focus on minimizing the error of the up until that point most difficult voxels.</p>
-</li>
-</ul>
-<h4 id="9-Activation-function"><a href="#9-Activation-function" class="headerlink" title="9. Activation function"></a>9. Activation function</h4><ul>
-<li>Han’s winning ISBI method applied <strong>PReLU</strong> activation instead of the more common ReLu allowing the network to also learn the optimal leakage coefficient of the activation function.</li>
-</ul>
-<h4 id="10-Post-processing"><a href="#10-Post-processing" class="headerlink" title="10. Post-processing"></a>10. Post-processing</h4><h6 id="noisy-data"><a href="#noisy-data" class="headerlink" title="noisy data"></a>noisy data</h6><ul>
-<li><p><strong>removing lesions as noise</strong> if they have relatively large size in one slice but simultaneously a very small size in an adjacent slice. </p>
-</li>
-<li><p><strong>remove or cut off lesions</strong> not fully contained within the liver boundaries. </p>
-</li>
-<li><p><strong>connected component labeling</strong></p>
-<h6 id="incorrect-holes"><a href="#incorrect-holes" class="headerlink" title="incorrect holes"></a>incorrect holes</h6></li>
-<li><p><strong>filling lesion hole</strong> that relies on the lesion volumes of adjacent slice (based on the observasion that lesion size will increase for each slice starting from the first lesion containing slice until the maximum lesion size slice and then decrease in a similar way until no lesion remains).</p>
-</li>
-<li><p><strong>morphological filtering</strong></p>
-</li>
-</ul>
-<h6 id="small-lesion-segmentation"><a href="#small-lesion-segmentation" class="headerlink" title="small lesion segmentation"></a>small lesion segmentation</h6><ul>
-<li><strong>tackle small lesion detection</strong>by implementing a special residual network with small lesion containing patches as input and remove lesions with less than 40% overlap.</li>
-</ul>
-<h6 id="filtering-false-positives"><a href="#filtering-false-positives" class="headerlink" title="filtering false positives"></a>filtering false positives</h6><ul>
-<li><p><strong>Random Forest classifier</strong></p>
-</li>
-<li><p>calculating the maximal lesion probability value of a connected lesion component and removing the lesion if this value is below an empirically determined threshold of 0.8.</p>
-</li>
-</ul>
-<p>参考：<br>Summary: The Liver Tumor Segmentation Benchmark (LiTS), Patrick Bilic et al. 201901 <a href="https://arxiv.org/abs/1901.04056" target="_blank" rel="noopener">(arxiv)</a></p>
+                <h2 id="水平集（Level-Set）"><a href="#水平集（Level-Set）" class="headerlink" title="水平集（Level Set）"></a>水平集（Level Set）</h2><h4 id="曲线演化的直观解释"><a href="#曲线演化的直观解释" class="headerlink" title="曲线演化的直观解释"></a>曲线演化的直观解释</h4><p>   假设$X(t)$表示一平面曲线，$T$表示切线，$N$表示法线。因为切向量$T$和法向量$N$互相垂直，所以平面上任何曲线都可以用曲线上任何一点的$T$和$N$的线性组合来表示：<br>$$\frac{\partial X}{\partial t} = \alpha T + \beta N$$<br>   如果只考虑几何形状的变化，则曲线变化只跟法线方向的变化有关系:<br>$$\frac{\partial X}{\partial t} = \beta N$$<br>   假设我们有一个3D surface和一个2D plane，如下所示，<br><img src="/medias/pic_md/Knowledge/LevelSet1.png" alt="Level Set1"><br>   我们通过surface与plane的关系来描述curve（surface与plane的交线），通过调整surface来实现curve的变化，这就是level set的基本思想。<br><img src="/medias/pic_md/Knowledge/LevelSet2.png" alt="Level Set2"></p>
+<h4 id="Level-set-的数学定义及运动表示"><a href="#Level-set-的数学定义及运动表示" class="headerlink" title="Level set 的数学定义及运动表示"></a>Level set 的数学定义及运动表示</h4><p>   假设隐函数$φ(X(t),t)$表示一个高维空间的surface，程其在低维空间上的接触面为$φ(X(t),t)=0$<br>   我们按如下方式跟踪surface和curve的演化过程。<br>$$\frac{\partial X}{\partial t} = V(k)N$$<br>其中,$V(k)$称为<strong>速度方程</strong>，$k$表示曲率，$t$表示时间，$N =  - \frac{\nabla \phi }{\left| {\nabla \phi } \right|}$表示surface的内法线。<br>然后对surface对t进行级联求导，<br>$$\phi (X(t),t) = 0$$<br>$$\Rightarrow \nabla \phi {X_t} + {\phi _t} = 0$$<br>$$\Rightarrow {\phi _t} = V(k)\left| {\nabla \phi } \right|$$<br>   由此可知，给定初始的surface$ φ(X(t),t)$以及速度方程$V(k)$，便可以得到任意时刻的surface $φ$。</p>
+<h4 id="Level-Set的数值解法"><a href="#Level-Set的数值解法" class="headerlink" title="Level Set的数值解法"></a>Level Set的数值解法</h4><p>   熟知机器学习同学可能会发现，surface φ的演化过程酷似神经网络中的参数利用梯度下降更新过程。<br>$$\frac{\partial \phi }{\partial t} = \frac{\phi ^{t + \Delta t} - {\phi ^t}}{\Delta t}$$<br>$$\Rightarrow {\phi ^{t + \Delta t}} = {\phi ^t} + {\phi _t}\Delta t = {\phi ^t} + V(k)\left| {\nabla \phi } \right|\Delta t$$</p>
+<p>参考：<br>[1] <a href="https://wiseodd.github.io/techblog/2016/11/05/levelset-method/" target="_blank" rel="noopener">“Level Set Method Part I: Introduction”</a></p>
 
             </div>
             <hr/>
@@ -615,7 +553,7 @@ train 3 different U-Net deriv">
                     </span>
                     <a href="http://huiyu-li.github.io" class="b-link-green">Cerry</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/08/04/Medical Image/2017 LiTS Winning algorithmic properties/" class="b-link-green">2017 LiTS Winning algorithmic properties</a>
+                    <a href="/2019/07/10/Knowledge/2019-7-10-水平集Level Set/" class="b-link-green">水平集-Level Set</a>
                 </p>
             </div>
         </div>
@@ -637,7 +575,7 @@ train 3 different U-Net deriv">
         repo: 'huiyu-li.github.io',
         owner: 'Huiyu-Li',
         admin: ["Huiyu-Li"],
-        id: '2019-08-04T21-00-00',
+        id: '2019-07-10T21-00-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
     gitalk.render('gitalk-container');
@@ -653,57 +591,7 @@ train 3 different U-Net deriv">
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2019/08/05/Knowledge/传统的图像分割方法/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="传统的图像分割方法">
-                        
-                        <span class="card-title">传统的图像分割方法</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary">图像分割(image segmentation)是指将图像分成若干具有相似性质的区域的过程.传统的图像分割方法主要有:
-1. 基于阈值的分割阈值法的基本思想是基于图像的灰度特征来计算一个或多个灰度阈值，并将图像中每个像素的灰度值与阈值相比较</div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-05
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Knowledge/" class="post-category" target="_blank">
-                                    Knowledge
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Segmentation/" target="_blank">
-                        <span class="chip bg-color">Segmentation</span>
-                    </a>
-                    
-                    <a href="/tags/Conventional-method/" target="_blank">
-                        <span class="chip bg-color">Conventional method</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/07/15/Knowledge/CRF as RNN/">
+                <a href="/2019/07/15/Knowledge/2020-2-10-CRF as RNN/">
                     <div class="card-image">
                         
                         <img src="/medias/pic_md/Knowledge/CRFasRNN1.jpg" class="responsive-img" alt="CRF as RNN">
@@ -715,9 +603,9 @@ train 3 different U-Net deriv">
                     <div class="summary">条件随机场(CRF )的概率函数为$P(X = x|I) = \frac{1}{z}\exp ( - E(x|I))$
 CRF 的能量函数为$E(x) = \sum\limits_i{\psi_u}({x_i})+\sum\limits_{</div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-15
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-15
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -739,6 +627,52 @@ CRF 的能量函数为$E(x) = \sum\limits_i{\psi_u}({x_i})+\sum\limits_{</div>
                     
                     <a href="/tags/RNN/" target="_blank">
                         <span class="chip bg-color">RNN</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/06/26/Diary/2019-06-26-毕业季有感/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/pic_md/Diary/BITgradutation.jpg" class="responsive-img" alt="毕业季有感">
+                        
+                        <span class="card-title">毕业季有感</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">第一次遇到BIT的毕业季，颇为壮观，因此感觉异常新鲜和惊奇，毕业竟然可以和入学有着相似的热闹，就像洗礼和葬礼有着相似的仪式感，虽然昭示着截然不同的起点和终点；还有生命中段的婚礼，人生遇到新鲜事，总是可喜可贺的事情。
+
+成长，总在不停地和过去</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Diary/" class="post-category" target="_blank">
+                                    Diary
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Heartbeats/" target="_blank">
+                        <span class="chip bg-color">Heartbeats</span>
                     </a>
                     
                 </div>
@@ -839,6 +773,13 @@ CRF 的能量函数为$E(x) = \sum\limits_i{\psi_u}({x_i})+\sum\limits_{</div>
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 <footer class="page-footer bg-color">
     <div class="container row center-align">
