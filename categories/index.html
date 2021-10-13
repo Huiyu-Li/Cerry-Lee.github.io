@@ -300,11 +300,20 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 
                 
                 
-                <a href="/categories/Diary/" title="Diary: 11">
+                <a href="/categories/Diary/" title="Diary: 9">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             style="background-color: #F9EBEA;">Diary
-                        <span class="tag-length">11</span>
+                        <span class="tag-length">9</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/Medical-Image/" title="Medical Image: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F5EEF8;">Medical Image
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -312,7 +321,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 <a href="/categories/Knowledge/" title="Knowledge: 6">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">Knowledge
+                            style="background-color: #D5F5E3;">Knowledge
                         <span class="tag-length">6</span>
                     </span>
                 </a>
@@ -321,25 +330,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 <a href="/categories/MyResearch/" title="MyResearch: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #D5F5E3;">MyResearch
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Medical-Image/" title="Medical Image: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #E8F8F5;">Medical Image
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/categories/Tools/" title="Tools: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">Tools
+                            style="background-color: #E8F8F5;">MyResearch
                         <span class="tag-length">2</span>
                     </span>
                 </a>
@@ -348,8 +339,17 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 <a href="/categories/Website/" title="Website: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F8F9F9;">Website
+                            style="background-color: #FEF9E7;">Website
                         <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/categories/Tools/" title="Tools: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #F8F9F9;">Tools
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
@@ -418,7 +418,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 name: 'Number of posts',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,0,0,1,0,0,1,1,0,0,1,1,0],
+                data: [0,0,0,1,0,0,1,1,0,0,0,1,0],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -460,7 +460,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"Diary","value":11},{"name":"Knowledge","value":6},{"name":"MyResearch","value":2},{"name":"Medical Image","value":1},{"name":"Tools","value":2},{"name":"Website","value":1}],
+                data: [{"name":"Diary","value":9},{"name":"Medical Image","value":1},{"name":"Knowledge","value":6},{"name":"MyResearch","value":2},{"name":"Website","value":1},{"name":"Tools","value":2}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -484,7 +484,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
         xAxis: [
             {
                 type: 'category',
-                data: ["Love","Heartbeats","Touch","Life","Python","Segmentation","Miss Scarecrow","Fiction","Distance Transform","Matlab"]
+                data: ["Love","Heartbeats","Touch","Life","Python","Segmentation","Fiction","Conference and Journal","Distance Transform","Matlab"]
             }
         ],
         yAxis: [
@@ -497,7 +497,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth : 18,
-                data: [4,3,2,2,2,2,1,1,1,1],
+                data: [3,3,2,2,2,2,1,1,1,1],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
